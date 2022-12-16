@@ -1,11 +1,6 @@
 import { newInstance } from "@jsplumb/browser-ui";
 
 const getPlumbInstance = (className) => {
-  // useEffect(() => {
-  //   const element = document.querySelector(`.${className}`);
-  //   if (element) setPlumbInstace(element);
-  // }, []);
-
   const element = document.querySelector(`.${className}`);
 
   if (element) {

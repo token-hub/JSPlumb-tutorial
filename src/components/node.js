@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { PlumbContext } from "../contexts/plumbContext";
-import {
-  EVENT_CONNECTION_CLICK,
-  INTERCEPTOR_DEFORE_DROP,
-  EVENT_ENDPOINT_MOUSEOVER,
-} from "@jsplumb/browser-ui";
+import getEndPointOptions from "../utilities/getEndPointOptions";
+import { CONNECTION } from "@jsplumb/browser-ui";
 
 const Node = ({ text, nodeID, instance }) => {
   const { getNodeIndex, saveSelectedNode } = useContext(PlumbContext);
@@ -13,35 +10,12 @@ const Node = ({ text, nodeID, instance }) => {
     const element = document.querySelector(`#${nodeID}`);
 
     if (element) {
-      console.log(instance);
-
-      instance.addEndpoint(element, {
-        endpoint: "Dot",
-        anchor: "Top",
-        maxConnections: 3,
-        uniqueEndpoint: true,
-        deleteEndpointsOnDetach: false,
-      });
-      instance.addEndpoint(element, {
-        endpoint: "Dot",
-        anchor: "Bottom",
-        maxConnections: 3,
-        uniqueEndpoint: true,
-        deleteEndpointsOnDetach: false,
-      });
-      instance.addEndpoint(element, {
-        endpoint: "Dot",
-        anchor: "Left",
-        maxConnections: 3,
-        uniqueEndpoint: true,
-        deleteEndpointsOnDetach: false,
-      });
-      instance.addEndpoint(element, {
-        endpoint: "Dot",
-        anchor: "Right",
-        maxConnections: 3,
-        uniqueEndpoint: true,
-        deleteEndpointsOnDetach: false,
+      instance.addEndpoint(element, getEndPointOptions("Top"));
+      instance.addEndpoint(element, getEndPointOptions("Bottom"));
+      instance.addEndpoint(element, getEndPointOptions("Left"));
+      instance.addEndpoint(element, getEndPointOptions("Right"));
+      instance.bind(CONNECTION, (e) => {
+        console.log("NODE CONNECTED");
       });
     }
   }, []);
