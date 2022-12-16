@@ -1,20 +1,18 @@
 import React, { createContext, useState, useRef } from "react";
-import useGetPlumbInstance from "../hooks/useGetPlumbInstance";
+import getNewInstance from "../utilities/getNewInstance";
+import Node from "../components/node";
 
 const PlumbContext = createContext();
 
 const PlumbProvider = ({ children }) => {
-  const [instances, setInstances] = useState({});
   const instancesRef = useRef({});
   const [nodes, setNodes] = useState([]);
   const nodesRef = useRef([]);
-  const getPlumbInstance = useGetPlumbInstance;
-
-  const createInstance = (className) => {
-    const instance = getPlumbInstance(className);
+  const createInstance = (key, element) => {
+    const instance = getNewInstance(element);
 
     if (instance) {
-      instancesRef.current[className] = instance;
+      instancesRef.current[key] = instance;
       return instance;
     }
   };
@@ -23,12 +21,21 @@ const PlumbProvider = ({ children }) => {
     return instancesRef.current[key];
   };
 
-  const createNode = (nodeText, node) => {
-    nodesRef.current.push({ nodeText, node });
+  const createNode = (nodeText, instanceKey = "main-container") => {
+    const instance = getInstance(instanceKey);
+
+    if (instance) {
+      const nodeID = `node-${nodeText.toLowerCase()}`;
+      const node = <Node text={nodeText} nodeID={nodeID} instance={instance} />;
+
+      if (!getNode(nodeText)) {
+        setNodes((prev) => [...prev, { nodeText, node }]);
+      }
+    }
   };
 
   const getNode = (nodeText) => {
-    return nodesRef.current.find((node) => node.nodeText == nodeText);
+    return nodes.find((node) => node.nodeText == nodeText);
   };
 
   const connect = (instanceKey, node1, node2) => {
@@ -41,7 +48,7 @@ const PlumbProvider = ({ children }) => {
   };
 
   const getNodeIndex = (nodeText) => {
-    return nodesRef.current.findIndex((node) => node.nodeText === nodeText);
+    return nodes.findIndex((node) => node.nodeText === nodeText);
   };
 
   const values = {
