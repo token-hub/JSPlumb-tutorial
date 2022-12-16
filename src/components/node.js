@@ -1,12 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { PlumbContext } from "../contexts/plumbContext";
+import {
+  EVENT_CONNECTION_CLICK,
+  INTERCEPTOR_DEFORE_DROP,
+  EVENT_ENDPOINT_MOUSEOVER,
+} from "@jsplumb/browser-ui";
 
 const Node = ({ text, nodeID, instance }) => {
-  const { getNodeIndex } = useContext(PlumbContext);
+  const { getNodeIndex, saveSelectedNode } = useContext(PlumbContext);
 
   useEffect(() => {
     const element = document.querySelector(`#${nodeID}`);
+
     if (element) {
+      console.log(instance);
+
       instance.addEndpoint(element, {
         endpoint: "Dot",
         anchor: "Top",
@@ -35,6 +43,14 @@ const Node = ({ text, nodeID, instance }) => {
         uniqueEndpoint: true,
         deleteEndpointsOnDetach: false,
       });
+
+      // instance._elementClick((e) => {
+      //   console.log(e, "clicked");
+      // });
+      // instance.bind(INTERCEPTOR_DEFORE_DROP, (params) => {});
+      // instance.bind(EVENT_CONNECTION_CLICK, (params) => {
+      //   console.log(params);
+      // });
     }
   }, []);
 
@@ -59,8 +75,12 @@ const Node = ({ text, nodeID, instance }) => {
   }
 
   return (
-    <div id={nodeID} className="node" style={{ left: "25px", top: `${top}px` }}>
-      {/* <div id={nodeID} className="node"> */}
+    <div
+      onClick={() => saveSelectedNode(text)}
+      id={nodeID}
+      className="node"
+      style={{ left: "25px", top: `${top}px` }}
+    >
       <span>{text}</span>
     </div>
   );

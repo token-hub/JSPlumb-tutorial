@@ -6,8 +6,10 @@ const PlumbContext = createContext();
 
 const PlumbProvider = ({ children }) => {
   const instancesRef = useRef({});
+  const [selectedNode, setSelectedNode] = useState();
   const [nodes, setNodes] = useState([]);
   const nodesRef = useRef([]);
+
   const createInstance = (key, element) => {
     const instance = getNewInstance(element);
 
@@ -51,6 +53,10 @@ const PlumbProvider = ({ children }) => {
     return nodes.findIndex((node) => node.nodeText === nodeText);
   };
 
+  const saveSelectedNode = (nodeText) => {
+    setSelectedNode(nodeText);
+  };
+
   const values = {
     createInstance,
     getInstance,
@@ -60,6 +66,8 @@ const PlumbProvider = ({ children }) => {
     connect,
     nodesRef,
     getNodeIndex,
+    selectedNode,
+    saveSelectedNode,
   };
 
   return (
