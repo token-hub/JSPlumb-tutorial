@@ -4,7 +4,7 @@ import useCreateNode from "../hooks/useCreateNode";
 import getRandomNodeText from "../utilities/getRandomNodeText";
 
 const SideContainer = () => {
-  const { createNode } = useContext(PlumbContext);
+  const { createNode, deleteNode } = useContext(PlumbContext);
 
   const handleCreateElement = () => {
     createNode(getRandomNodeText());
@@ -15,7 +15,7 @@ const SideContainer = () => {
       <button className="control-button" onClick={handleCreateElement}>
         Add Element
       </button>
-      <button className="control-button" onClick={() => alert("clicked")}>
+      <button className="control-button" onClick={() => deleteNode()}>
         Delete Element
       </button>
     </>

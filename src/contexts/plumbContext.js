@@ -57,6 +57,20 @@ const PlumbProvider = ({ children }) => {
     setSelectedNode(nodeText);
   };
 
+  const deleteNode = () => {
+    if (selectedNode) {
+      const instance = getInstance("main-container");
+
+      const element = document.querySelector(`#${selectedNode}`);
+
+      if (element) {
+        instance.removeAllEndpoints(element);
+        // instance.deleteEveryEndpoint(element);
+        instance._removeElement(element);
+      }
+    }
+  };
+
   const values = {
     createInstance,
     getInstance,
@@ -68,6 +82,7 @@ const PlumbProvider = ({ children }) => {
     getNodeIndex,
     selectedNode,
     saveSelectedNode,
+    deleteNode,
   };
 
   return (

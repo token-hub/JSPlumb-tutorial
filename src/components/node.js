@@ -43,14 +43,6 @@ const Node = ({ text, nodeID, instance }) => {
         uniqueEndpoint: true,
         deleteEndpointsOnDetach: false,
       });
-
-      // instance._elementClick((e) => {
-      //   console.log(e, "clicked");
-      // });
-      // instance.bind(INTERCEPTOR_DEFORE_DROP, (params) => {});
-      // instance.bind(EVENT_CONNECTION_CLICK, (params) => {
-      //   console.log(params);
-      // });
     }
   }, []);
 
@@ -76,7 +68,7 @@ const Node = ({ text, nodeID, instance }) => {
 
   return (
     <div
-      onClick={() => saveSelectedNode(text)}
+      onClick={() => saveSelectedNode(nodeID)}
       id={nodeID}
       className="node"
       style={{ left: "25px", top: `${top}px` }}
