@@ -23,7 +23,6 @@ const Node = ({ text, nodeID, instance }) => {
     const element = document.querySelector(`#${nodeID}`);
 
     if (element) {
-      console.log(instance);
       instance.addEndpoint(element, getEndPointOptions("Top"));
       instance.addEndpoint(element, getEndPointOptions("Bottom"));
       instance.addEndpoint(element, getEndPointOptions("Left"));

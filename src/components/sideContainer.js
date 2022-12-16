@@ -4,19 +4,29 @@ import useCreateNode from "../hooks/useCreateNode";
 import getRandomNodeText from "../utilities/getRandomNodeText";
 
 const SideContainer = () => {
-  const { createNode, deleteNode } = useContext(PlumbContext);
-
-  const handleCreateElement = () => {
-    createNode(getRandomNodeText());
-  };
+  const {
+    createNode,
+    deleteNode,
+    deleteAllConnections,
+    createNodeOnElement,
+  } = useContext(PlumbContext);
 
   return (
     <>
-      <button className="control-button" onClick={handleCreateElement}>
+      <button
+        className="control-button"
+        onClick={() => createNode(getRandomNodeText())}
+      >
         Add Element
+      </button>
+      <button className="control-button" onClick={() => createNodeOnElement()}>
+        Add on Element
       </button>
       <button className="control-button" onClick={() => deleteNode()}>
         Delete Element
+      </button>
+      <button className="control-button" onClick={() => deleteAllConnections()}>
+        Delete All Connections
       </button>
     </>
   );

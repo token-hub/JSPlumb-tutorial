@@ -1,6 +1,8 @@
 import React, { createContext, useState, useRef } from "react";
 import getNewInstance from "../utilities/getNewInstance";
+import getHTMLElement from "../utilities/getHTMLElement";
 import Node from "../components/node";
+import getRandomNodeText from "../utilities/getRandomNodeText";
 
 const PlumbContext = createContext();
 
@@ -27,12 +29,14 @@ const PlumbProvider = ({ children }) => {
     const instance = getInstance(instanceKey);
 
     if (instance) {
-      const nodeID = `node-${nodeText.toLowerCase()}`;
+      const nodeID = `${nodeText.toLowerCase()}`;
       const node = <Node text={nodeText} nodeID={nodeID} instance={instance} />;
 
       if (!getNode(nodeText)) {
         setNodes((prev) => [...prev, { nodeText, node }]);
       }
+
+      return { nodeID, node };
     }
   };
 
@@ -40,11 +44,12 @@ const PlumbProvider = ({ children }) => {
     return nodes.find((node) => node.nodeText == nodeText);
   };
 
-  const connect = (instanceKey, node1, node2) => {
+  const connect = (node1, node2, instanceKey = "main-container") => {
     if (node1 && node2) {
       getInstance(instanceKey).connect({
         source: node1,
         target: node2,
+        anchor: "AutoDefault",
       });
     }
   };
@@ -65,9 +70,30 @@ const PlumbProvider = ({ children }) => {
 
       if (element) {
         instance.removeAllEndpoints(element);
-        // instance.deleteEveryEndpoint(element);
         instance._removeElement(element);
       }
+    }
+  };
+
+  const deleteAllConnections = () => {
+    const instance = getInstance("main-container");
+    const connections = instance.select().entries;
+    connections.forEach((connection) =>
+      connection.endpoints.forEach((endpoint) => {
+        endpoint.deleteEveryConnection();
+      })
+    );
+  };
+
+  const createNodeOnElement = () => {
+    if (selectedNode) {
+      const { nodeID } = createNode(getRandomNodeText());
+      const element1 = getHTMLElement(selectedNode);
+
+      setTimeout(() => {
+        const element2 = getHTMLElement(nodeID);
+        connect(element2, element1);
+      }, 50);
     }
   };
 
@@ -83,6 +109,8 @@ const PlumbProvider = ({ children }) => {
     selectedNode,
     saveSelectedNode,
     deleteNode,
+    deleteAllConnections,
+    createNodeOnElement,
   };
 
   return (

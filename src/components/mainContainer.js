@@ -15,7 +15,7 @@ const MainContainer = () => {
   //     getHTMLElement(node1.nodeID),
   //     getHTMLElement(node2.nodeID)
   //   );
-  console.log(nodes);
+
   return <>{nodes.map((node) => node.node)}</>;
 };
 
