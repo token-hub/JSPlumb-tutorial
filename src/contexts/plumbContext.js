@@ -14,6 +14,7 @@ const PlumbProvider = ({ children }) => {
 
   const createInstance = (key, element) => {
     const instance = getNewInstance(element);
+    localStorage.setItem("alerted", "");
 
     if (instance) {
       instancesRef.current[key] = instance;

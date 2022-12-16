@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { PlumbContext } from "../contexts/plumbContext";
 import getEndPointOptions from "../utilities/getEndPointOptions";
-import { CONNECTION } from "@jsplumb/browser-ui";
+import { CONNECTION, EVENT_ELEMENT_MOUSE_OVER } from "@jsplumb/browser-ui";
 
 const Node = ({ text, nodeID, instance }) => {
   const { getNodeIndex, saveSelectedNode } = useContext(PlumbContext);
@@ -17,6 +17,12 @@ const Node = ({ text, nodeID, instance }) => {
         localStorage.setItem("alerted", "yes");
       }
     }
+
+    const alerted = localStorage.getItem("connected") || "";
+    if (alerted != "yes") {
+      alert("Node Connected");
+      localStorage.setItem("connected", "yes");
+    }
   };
 
   useEffect(() => {
@@ -28,6 +34,7 @@ const Node = ({ text, nodeID, instance }) => {
       instance.addEndpoint(element, getEndPointOptions("Left"));
       instance.addEndpoint(element, getEndPointOptions("Right"));
       instance.bind(CONNECTION, handleConnection);
+      instance.bind(EVENT_ELEMENT_MOUSE_OVER, () => localStorage.clear());
     }
   }, []);
 
