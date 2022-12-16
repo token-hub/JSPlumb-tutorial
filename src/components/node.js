@@ -6,17 +6,29 @@ import { CONNECTION } from "@jsplumb/browser-ui";
 const Node = ({ text, nodeID, instance }) => {
   const { getNodeIndex, saveSelectedNode } = useContext(PlumbContext);
 
+  const handleConnection = (e) => {
+    const maxConnections = e?.sourceEndpoint?.maxConnections;
+    const currentConnectionLength = e?.sourceEndpoint?.connections.length;
+
+    if (maxConnections === currentConnectionLength) {
+      const alerted = localStorage.getItem("alerted") || "";
+      if (alerted != "yes") {
+        alert("Max connection reached!");
+        localStorage.setItem("alerted", "yes");
+      }
+    }
+  };
+
   useEffect(() => {
     const element = document.querySelector(`#${nodeID}`);
 
     if (element) {
+      console.log(instance);
       instance.addEndpoint(element, getEndPointOptions("Top"));
       instance.addEndpoint(element, getEndPointOptions("Bottom"));
       instance.addEndpoint(element, getEndPointOptions("Left"));
       instance.addEndpoint(element, getEndPointOptions("Right"));
-      instance.bind(CONNECTION, (e) => {
-        console.log("NODE CONNECTED");
-      });
+      instance.bind(CONNECTION, handleConnection);
     }
   }, []);
 
