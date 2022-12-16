@@ -1,0 +1,32 @@
+      // //top
+      // inst.addEndpoint(node, {
+      //   endpoint: "Dot",
+      //   anchor: [0.2, 0, 0, -1, 3, -46],
+      //   maxConnections: 3,
+      //   uniqueEndpoint: true,
+      //   deleteEndpointsOnDetach: false,
+      // });
+      // //right
+      // inst.addEndpoint(node, {
+      //   endpoint: "Dot",
+      //   anchor: [1, 0.2, 1, 0, -28, -35],
+      //   maxConnections: 3,
+      //   uniqueEndpoint: true,
+      //   deleteEndpointsOnDetach: false,
+      // });
+      // //bottom
+      // inst.addEndpoint(node, {
+      //   endpoint: "Dot",
+      //   anchor: [0.8, 1, 0, 1, -55, -48],
+      //   maxConnections: 3,
+      //   uniqueEndpoint: true,
+      //   deleteEndpointsOnDetach: false,
+      // });
+      // //left
+      // inst.addEndpoint(node, {
+      //   endpoint: "Dot",
+      //   anchor: [0, 0.8, -1, 0, -25, -58],
+      //   maxConnections: 3,
+      //   uniqueEndpoint: true,
+      //   deleteEndpointsOnDetach: false,
+      // });

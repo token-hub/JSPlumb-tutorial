@@ -7,12 +7,10 @@ import getHTMLElement from "../utilities/getHTMLElement";
 const MainContainer = () => {
   const { createInstance, connect } = useContext(PlumbContext);
 
-  const instance = createInstance("main-container");
+  createInstance("main-container");
 
   const node1 = useCreateNode("Node1");
-  //   const node2 = useCreateNode("Node2");
-
-  //   console.log(document.querySelector(`#${node1.nodeID}`));
+  const node2 = useCreateNode("Node2");
 
   //   connect(
   //     "main-container",
@@ -24,7 +22,7 @@ const MainContainer = () => {
     <>
       main
       {node1.node}
-      {/* {node2.node} */}
+      {node2.node}
     </>
   );
 };

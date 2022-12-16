@@ -18,6 +18,8 @@ const useGetPlumbInstance = (className) => {
       },
     });
 
+    instance.setContainer(plumbInstance);
+
     return instance;
   }
 };

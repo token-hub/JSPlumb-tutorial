@@ -36,10 +36,12 @@ const PlumbProvider = ({ children }) => {
       getInstance(instanceKey).connect({
         source: node1,
         target: node2,
-        // anchor: "AutoDefault",
-        anchor: { type: "Perimeter", options: { shape: "Circle" } },
       });
     }
+  };
+
+  const getNodeIndex = (nodeText) => {
+    return nodesRef.current.findIndex((node) => node.nodeText === nodeText);
   };
 
   const values = {
@@ -49,6 +51,8 @@ const PlumbProvider = ({ children }) => {
     nodes,
     getNode,
     connect,
+    nodesRef,
+    getNodeIndex,
   };
 
   return (
